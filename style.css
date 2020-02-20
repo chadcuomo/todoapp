@@ -119,6 +119,7 @@ li {
 
     .header {
         font-size: 27px;
+        padding: 5px;
     }
 
     input[type=text] {
