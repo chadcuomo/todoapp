@@ -112,7 +112,9 @@ li {
 
 @media only screen and (max-width: 600px) {
     .todo-list {
-        max-width: 375px;
+        padding: 5px;
+        max-width: 350px;
+        border: 5px solid lightslategrey;
     }
 
     .header {
@@ -120,10 +122,10 @@ li {
     }
 
     input[type=text] {
-        width: 240px;
+        width: 225px;
     }
 
     li {
-        width: 335px;
+        width: 315px;
     }
 }
