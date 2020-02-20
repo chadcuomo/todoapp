@@ -1,0 +1,104 @@
+body {
+    background: rgba(29, 36, 48, 1);
+    font-family: 'Roboto';
+    display: flex;
+    justify-content: center;
+}
+
+.todo-list {
+    display: flex;
+    max-width: 550px;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-items: center;
+}
+
+.header {
+    margin: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 64px;
+    color: rgba(219, 103, 37, 1);
+
+}
+
+button {
+    background-color: rgba(219, 103, 37, 1);
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 9px 20px;
+    display: inline-block;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: white;
+    color: rgba(219, 103, 37, 1);
+
+}
+
+input[type=text] {
+    width: 420px;
+    height: 29px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 10px;
+    margin: 5px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 300;
+    background-color: rgba(255, 255, 255, 1);
+
+}
+
+input[type=text]:focus {
+    outline: none;
+    border: 3px solid lightslategrey;
+}
+
+
+li {
+    list-style-type: none;
+    width: 500px;
+    margin: 15px;
+    padding: 5px;
+    padding-top: 15px;
+    padding-left: 5px;
+    background-color: rgba(210, 223, 243, 1);
+    border: 3px solid rgba(77, 88, 108, 1);
+    border-radius: 3px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 1);
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(68, 78, 94, 1);
+    display: flex;
+    align-items: flex-start;
+}
+
+.delete {
+    background-color: darkslategrey;
+    padding: 5px 12px;
+    margin-left: auto;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+.todo-item input[type="checkbox"]:checked+.itemName {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.todo-item input[type="checkbox"] {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 5px;
+    background-color: #eee;
+}
