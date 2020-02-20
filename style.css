@@ -11,6 +11,10 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     justify-items: center;
+    border: 7px solid lightslategrey;
+    padding: 10px;
+    padding-bottom: 20px;
+    margin-top: 20px;
 }
 
 .header {
@@ -19,6 +23,7 @@ body {
     font-weight: bold;
     font-size: 64px;
     color: rgba(219, 103, 37, 1);
+    padding: 10px;
 
 }
 
