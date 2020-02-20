@@ -35,6 +35,7 @@ button {
     display: inline-block;
     text-decoration: none;
     transition: 0.2s;
+    outline: none;
 }
 
 button:hover {
@@ -101,4 +102,23 @@ li {
     width: 15px;
     margin: 5px;
     background-color: #eee;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .todo-list {
+        max-width: 375px;
+    }
+
+    .header {
+        font-size: 48px;
+    }
+
+    input[type=text] {
+        width: 250px;
+    }
+
+    li {
+        width: 335px;
+    }
 }

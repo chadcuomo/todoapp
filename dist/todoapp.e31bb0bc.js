@@ -117,79 +117,97 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"index.js":[function(require,module,exports) {
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  return bundleURL;
-}
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
+var form = document.querySelector('.todo');
+var list = document.querySelector('.list');
+var li = document.querySelectorAll('li');
+var items = [];
 
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
+function addTodo(todo) {
+  var item = {
+    todo: todo,
+    id: Date.now(),
+    complete: false
   };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
+  items.push(item);
+  console.log(items);
+  list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
-var cssTimeout = null;
+function displayTodos() {
+  var html = items.map(function (item) {
+    return "<li class=\"todo-item\">\n        <input \n            value=\"".concat(item.id, "\" \n            type=\"checkbox\"\n            ").concat(item.complete ? 'checked' : '', ">\n        <span class=\"itemName\" id=\"").concat(item.id, "\">").concat(item.todo, "</span>\n        <button\n        class=\"delete\"\n        aria-label=\"Remove ").concat(item.todo, "\"\n        value=\"").concat(item.id, "\">&times;</button>\n        </li>");
+  }).join('');
+  list.innerHTML = html;
+}
 
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
+function handleSubmit(e) {
+  e.preventDefault();
+  var name = e.currentTarget.item.value;
+  if (!name) return;
+  addTodo(name);
+  e.currentTarget.item.value = '';
+}
+
+function deleteItem(id) {
+  console.log('deleting');
+  items = items.filter(function (item) {
+    return item.id !== id;
+  });
+  list.dispatchEvent(new CustomEvent('itemsUpdated'));
+}
+
+function markAsComplete(id) {
+  var itemRef = items.find(function (item) {
+    return item.id === id;
+  });
+  itemRef.complete = !itemRef.complete;
+  list.dispatchEvent(new CustomEvent('itemsUpdated'));
+  console.log(items);
+}
+
+function mirrorToLocalStorage() {
+  console.info('Saving items to localstorage');
+  localStorage.setItem('items', JSON.stringify(items));
+}
+
+function restoreFromLocalStorage() {
+  console.info('restoring from ls');
+  var lsItems = JSON.parse(localStorage.getItem('items'));
+
+  if (lsItems.length) {
+    var _items;
+
+    (_items = items).push.apply(_items, _toConsumableArray(lsItems));
+
+    list.dispatchEvent(new CustomEvent('itemsUpdated'));
+  }
+}
+
+form.addEventListener('submit', handleSubmit);
+list.addEventListener('itemsUpdated', displayTodos);
+list.addEventListener('itemsUpdated', mirrorToLocalStorage);
+list.addEventListener('click', function (e) {
+  var id = parseInt(e.target.value);
+
+  if (e.target.matches('button')) {
+    deleteItem(id);
   }
 
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  if (event.target.matches('input[type="checkbox"]')) {
+    markAsComplete(id);
+  }
+});
+restoreFromLocalStorage();
+},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -393,5 +411,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/style.e308ff8e.js.map
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+//# sourceMappingURL=/todoapp.e31bb0bc.js.map
